@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Inventory Dashboard</title>
+</head>
+
+<body>
+    <h2>Product Inventory Dashboard</h2>
+    <pre id="output"></pre>
+
+    <script>
+        const inventory = [
+            { name: "Laptop", price: 800 },
+            { name: "Mouse", price: 25 }
+        ];
+
+        const productName = prompt("Enter new product name:");
+        const productPrice = Number(prompt("Enter product price:"));
+
+        if (productName && productName.trim() && Number.isFinite(productPrice) && productPrice >= 0) {
+            inventory.push({
+                name: productName.trim(),
+                price: productPrice
+            });
+        } else {
+            alert("Invalid product details!");
+        }
+
+        let total = 0;
+        let output = "";
+
+        inventory.forEach(product => {
+            let category;
+
+            if (product.price < 50) {
+                category = "Budget";
+            } else if (product.price < 200) {
+                category = "Standard";
+            } else {
+                category = "Premium";
+            }
+
+            output += `${product.name} - $${product.price} (${category})\n`;
+            total += product.price;
+        });
+
+        output += `\nTotal Inventory Value: $${total}`;
+
+        output += "\n\nAffordable Products (under $200):";
+        inventory
+            .filter(product => product.price < 200)
+            .forEach(product => {
+                output += `\n${product.name}`;
+            });
+
+        document.getElementById("output").textContent = output;
+    </script>
+</body>
+
+</html>
